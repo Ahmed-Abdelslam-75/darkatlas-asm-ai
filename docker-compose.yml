@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: asm
+      POSTGRES_PASSWORD: asm
+      POSTGRES_DB: asm
+    healthcheck:
+      # The API waits for this before connecting.
+      test: ["CMD-SHELL", "pg_isready -U asm -d asm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    # Loads GOOGLE_API_KEY, API_KEY, etc. Copy .env.example -> .env first.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Override the DB host so it points at the compose "db" service.
+      DATABASE_URL: postgresql+psycopg2://asm:asm@db:5432/asm
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
