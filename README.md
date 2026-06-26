@@ -304,6 +304,14 @@ Coverage of the core logic the rubric calls out:
 
 * **AI track.** The acceptance email is for the AI Internship, so this implements
   Track B (minimal API + the four mandatory LangChain capabilities).
+* **Sample dataset.** The provided materials contained only a short excerpt
+  (Appendix A), so `data/sample_assets.json` is a **representative dataset modeled
+  on it** — covering all six asset types, the relationship hints, and the
+  documented edge cases (expired/expiring certificates, a duplicate from a second
+  source, sensitive services, end-of-life tech, and one malformed record). The
+  `/import` endpoint accepts **any** dataset matching the asset schema, so the
+  official dataset can be dropped in (replace the file or POST it to `/import`)
+  with no code changes.
 * **Gemini via LangChain.** The task allows any provider; Google Gemini
   (`gemini-2.5-flash`) was chosen for its free cloud tier. The key is read from
   `GOOGLE_API_KEY` and never committed, and the LLM is isolated in
