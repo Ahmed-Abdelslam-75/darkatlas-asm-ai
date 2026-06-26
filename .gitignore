@@ -14,6 +14,10 @@ __pycache__/
 venv/
 env/
 
+# Local SQLite databases (created when running the app/tests locally)
+*.db
+*.sqlite3
+
 # OS / editor
 .DS_Store
 .idea/
